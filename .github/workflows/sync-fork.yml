@@ -57,18 +57,3 @@ jobs:
         title: 'Sync with upstream'
         body: 'This PR merges changes from the upstream repository into the forked repository.'
         labels: 'sync'
-
-    - name: Merge Pull Request
-      uses: actions/github-script@v6
-      with:
-        github-token: ${{ secrets.GH_PAT }}
-        script: |
-          const prNumber = ${{ steps.create_pr.outputs.pull_request_number }};
-          if (prNumber) {
-            await github.pulls.merge({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: prNumber,
-              merge_method: 'squash'
-            });
-          }
